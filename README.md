@@ -1,124 +1,99 @@
-# GPTMiddleman
+## GPTMiddleman
 
-The GPTMiddleman is a middleware application that serves as a middle layer between your client applications and the OpenAI API. It handles the communication with the OpenAI API, provides additional functionality such as rate limiting and user management, and simplifies the process of integrating the capabilities into your applications.
+GPTMiddleman is an open-source project that provides a middleman service for the OPENAI GPT models. Please note that this project is not officially affiliated with OPENAI.
 
-## Features
+### Features
+- Supports multiple GPT models, including gpt-3.5-turbo, gpt-4, and more.
+- The initial caching process takes approximately one minute, while the subsequent querying process using the cache only requires a few seconds (for a dataset of 220,000 English Wikipedia articles).
+- The initialization caching process takes several seconds, but querying the dataset using the cache only takes a few seconds.
+- Subsequent queries for vector embeddings only take less than two seconds.
 
-- Request forwarding: The middleman application forwards your API requests to the OpenAI GPT API and returns the responses to your client applications.
-- Rate limiting: The middleman handles rate limiting and manages user quotas to prevent API abuse and control usage.
-- User management: The middleman supports user management, including creating, updating, and deleting user accounts, as well as retrieving user information.
-- Embeddings support: The middleman can also process and generate text embeddings using the OpenAI text embedding API.
+### Getting Started
+To use the GPTMiddleman service, you can make API requests to the provided endpoints:
 
-## Usage
+- `/v1/chat/completions` - Send a POST request to generate chat completions using the GPT models.
+- `/v1/chat/json` - Send a POST request to generate chat completions using the GPT models with JSON input.
+- `/v1/stream_chat/completions` - Send a POST request to generate chat completions using the GPT models via a streaming API.
+- `/v1/stream_chat/json` - Send a POST request to generate chat completions using the GPT models with JSON input via a streaming API.
+- `/v1/embeddings` - Send a POST request to retrieve vector embeddings for a given input text using the text-embedding-ada-002 model.
 
-To use the GPTMiddleman in your project:
+### Administration
+The GPTMiddleman also provides administrative endpoints for managing user accounts:
 
-1. Install the dependencies: `cargo build`
-2. Start the server: `cargo run`
-3. Send API requests to the middleman server, specifying the desired GPT models and passing the necessary parameters.
-4. Receive the responses from the middleman server and process them accordingly in your client applications.
+- `/admin/create_user` - Send a POST request to create a new user account with a specified number of request counts.
+- `/admin/read_users` - Send a GET request to retrieve information about all existing user accounts.
+- `/admin/update_user` - Send a POST request to update the request count for a specific user account.
+- `/admin/delete_users` - Send a POST request to delete one or more user accounts.
 
-## API Endpoints
+### User Management
+Individual users can perform the following operations:
 
-The GPTMiddleman provides the following API endpoints:
+- `/user/read_user` - Send a POST request to retrieve information about a specific user account.
+- `/user/decrement_user` - Send a POST request to decrement the request count for a specific user account.
 
-- `POST /v1/chat/completions`: Process a chat completion request with the GPT model.
-- `POST /v1/stream_chat/completions`: Process a chat completion request using streaming (continuous) responses.
-- `POST /v1/chat/json`: Process a chat completion request with the GPT model, using JSON format.
-- `POST /v1/stream_chat/json`: Process a chat completion request using streaming (continuous) responses, using JSON format.
-- `POST /v1/embeddings`: Process a text embedding request using the GPT `text-embedding-ada-002` model.
-- `POST /admin/create_user`: Create a new user with a specified request count.
-- `GET /admin/read_users`: Read the list of all users and their request counts.
-- `POST /admin/update_user`: Update the request count of a specific user.
-- `POST /admin/delete_users`: Delete multiple users by their API tokens.
-- `POST /user/read_user`: Read the request count of a specific user.
-- `POST /user/decrement_user`: Decrement the request count of a specific user.
+### Usage Example
+You can use cURL or any other HTTP client to send requests to the GPTMiddleman's API endpoints. Here are some examples:
 
-## Example API Usage
+Send a POST request to `/v1/chat/completions`:
+```bash
+curl -X POST http://localhost:3000/v1/chat/completions \
+  -d '{
+    "model": "gpt-3.5-turbo", 
+    "messages": [{"role": "user", "content": "Say This is a test!"}]
+}'
+```
 
-Here are some examples of how to use the GPTMiddleman API:
+Send a POST request to `/v1/chat/json`:
+```bash
+curl -X POST http://localhost:3000/v1/chat/json \
+  -d '{
+    "model": "gpt-3.5-turbo", 
+    "messages": [{"role": "user", "content": "Tell me a joke!"}]
+}'
+```
 
-1. Process a chat completion request:
-   ```bash
-   curl -X POST http://localhost:3000/v1/chat/completions \
-     -d '{
-       "model": "gpt-3.5-turbo", 
-       "messages": [{"role": "user", "content": "Say This is a test!"}]
-     }'
-   ```
-2. Process a streaming chat completion request:
-   ```bash
-   curl -X POST http://localhost:3000/v1/stream_chat/completions \
-     -d '{
-       "model": "gpt-3.5-turbo", 
-       "messages": [{"role": "user", "content": "Tell me a story!"}]
-     }'
-   ```
-3. Process a chat completion request with JSON format:
-   ```bash
-   curl -X POST http://localhost:3000/v1/chat/json \
-     -d '{
-       "model": "gpt-3.5-turbo",
-       "messages": [{"role": "user", "content": "Say This is a test!"}]
-     }'
-   ```
-4. Process a streaming chat completion request with JSON format:
-   ```bash
-   curl -X POST http://localhost:3000/v1/stream_chat/json \
-     -d '{
-       "model": "gpt-3.5-turbo",
-       "messages": [{"role": "user", "content": "Tell me a story!"}]
-     }'
-   ```
-5. Process a text embedding request:
-   ```bash
-   curl -X POST http://localhost:3000/v1/embeddings \
-     -d '{
-       "input": "The food was delicious and the waiter was very attentive.",
-       "model": "text-embedding-ada-002"
-     }'
-   ```
-6. Create a new user:
-   ```bash
-   curl -X POST http://localhost:3000/admin/create_user \
-     -H "Content-Type: application/json" \
-     -d '{
-       "request_count": 10
-     }'
-   ```
-7. Read the list of all users:
-   ```bash
-   curl http://localhost:3000/admin/read_users
-   ```
-8. Update the request count of a specific user:
-   ```bash
-   curl http://localhost:3000/admin/update_user \
-     -d '{
-       "api_token": "sk-S8XbAUS6B14pvpiomaajtwWSuwS58EYw7POP9VNSffC4Ykx6",
-       "delta": 10
-     }'
-   ```
-9. Delete multiple users by their API tokens:
-   ```bash
-   curl http://localhost:3000/admin/delete_users \
-     -H "Content-Type: application/json" \
-     -d '{
-       "api_tokens": ["sk-yGDpHLEzHErHPXjhpUk6CIBzdVYxUInUUQArHNt4aC925vCe", "sk-hlK5uPXWmKCJ4PjlY6QiQtnoKepvlJWsSdJJkL9VJWRLwkM7"]
-     }'
-   ```
-10. Read the request count of a specific user:
-   ```bash
-   curl http://localhost:3000/user/read_user \
-     -d '{
-       "api_token": "sk-S8XbAUS6B14pvpiomaajtwWSuwS58EYw7POP9VNSffC4Ykx6"
-     }'
-   ```
-11. Decrement the request count of a specific user:
-   ```bash
-   curl http://localhost:3000/user/decrement_user \
-     -d '{
-       "api_token": "sk-S8XbAUS6B14pvpiomaajtwWSuwS58EYw7POP9VNSffC4Ykx6"
-     }'
-   ```
+Send a POST request to `/v1/embeddings`:
+```bash
+curl -X POST http://localhost:3000/v1/embeddings \
+  -d '{
+    "input": "The food was delicious and the waiter...",
+    "model": "text-embedding-ada-002"
+}'
+```
 
-Please note that in the above commands, replace `http://localhost:3000` with the actual address and port of your server. Also, note that the POST requests are using the `-d` option with an empty data body (`""`) as the sample routes do not use request bodies.
+### Administration Example
+You can also manage user accounts using the provided administrative endpoints. Here are some examples:
+
+Send a POST request to `/admin/create_user` to create a new user:
+```bash
+curl -X POST http://localhost:3000/admin/create_user \
+  -H "Content-Type: application/json" \
+  -d '{
+  "request_count": 10
+}'
+```
+
+Send a GET request to `/admin/read_users` to retrieve information about all user accounts:
+```bash
+curl http://localhost:3000/admin/read_users
+```
+
+Send a POST request to `/admin/update_user` to update the request count for a specific user:
+```bash
+curl http://localhost:3000/admin/update_user \
+  -d '{
+  "api_token":"sk-pkNQTCFLCMCeDr0KUIPkWQMAhFiMZwXwkf4vCUFFUD5Jb05w",
+  "delta": 10
+}'
+```
+
+Send a POST request to `/admin/delete_users` to delete one or more user accounts:
+```bash
+curl http://localhost:3000/admin/delete_users \
+  -H "Content-Type: application/json" \
+  -d '{
+  "api_tokens": ["sk-pkNQTCFLCMCeDr0KUIPkWQMAhFiMZwXwkf4vCUFFUD5Jb05w"]
+}'
+```
+
+For more details and usage guidelines, please refer to the project's documentation.
