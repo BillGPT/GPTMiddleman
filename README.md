@@ -4,29 +4,29 @@ The GPTMiddleman is a middleware application that serves as a middle layer betwe
 
 ## Features
 
-- Request forwarding: The middleman application forwards your API requests to the OpenAI GPT-3 API and returns the responses to your client applications.
+- Request forwarding: The middleman application forwards your API requests to the OpenAI GPT API and returns the responses to your client applications.
 - Rate limiting: The middleman handles rate limiting and manages user quotas to prevent API abuse and control usage.
 - User management: The middleman supports user management, including creating, updating, and deleting user accounts, as well as retrieving user information.
 - Embeddings support: The middleman can also process and generate text embeddings using the OpenAI text embedding API.
 
 ## Usage
 
-To use the GPT-3 Chatbot Middleman in your project:
+To use the GPTMiddleman in your project:
 
 1. Install the dependencies: `cargo build`
 2. Start the server: `cargo run`
-3. Send API requests to the middleman server, specifying the desired GPT-3 models and passing the necessary parameters.
+3. Send API requests to the middleman server, specifying the desired GPT models and passing the necessary parameters.
 4. Receive the responses from the middleman server and process them accordingly in your client applications.
 
 ## API Endpoints
 
-The GPT-3 Chatbot Middleman provides the following API endpoints:
+The GPTMiddleman provides the following API endpoints:
 
-- `POST /v1/chat/completions`: Process a chat completion request with the GPT-3 model.
+- `POST /v1/chat/completions`: Process a chat completion request with the GPT model.
 - `POST /v1/stream_chat/completions`: Process a chat completion request using streaming (continuous) responses.
-- `POST /v1/chat/json`: Process a chat completion request with the GPT-3 model, using JSON format.
+- `POST /v1/chat/json`: Process a chat completion request with the GPT model, using JSON format.
 - `POST /v1/stream_chat/json`: Process a chat completion request using streaming (continuous) responses, using JSON format.
-- `POST /v1/embeddings`: Process a text embedding request using the GPT-3 `text-embedding-ada-002` model.
+- `POST /v1/embeddings`: Process a text embedding request using the GPT `text-embedding-ada-002` model.
 - `POST /admin/create_user`: Create a new user with a specified request count.
 - `GET /admin/read_users`: Read the list of all users and their request counts.
 - `POST /admin/update_user`: Update the request count of a specific user.
@@ -36,7 +36,7 @@ The GPT-3 Chatbot Middleman provides the following API endpoints:
 
 ## Example API Usage
 
-Here are some examples of how to use the GPT-3 Chatbot Middleman API:
+Here are some examples of how to use the GPTMiddleman API:
 
 1. Process a chat completion request:
    ```bash
