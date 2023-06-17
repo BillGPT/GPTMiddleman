@@ -96,4 +96,24 @@ curl http://localhost:3000/admin/delete_users \
 }'
 ```
 
+### Configuring the Embeddings Directory
+
+To specify your own directory for embeddings data in the `src/models/storage/memory.rs` file, you need to replace `"wiki_5"` in `load_all_embeddings("wiki_5")` with your desired path.
+
+Each file in your directory should be a JSON file with the following format:
+
+```json
+{
+  "embedding": [
+    -0.009146899,
+    -0.021190763,
+    ...
+    -0.016805079
+  ],
+  "input": "Title: Bezeklik.... ",
+  "total_tokens": 216,
+  "uuid": "1234b15a-2b58-4be1-bab5-a810d06f4edc"
+}
+```
+
 For more details and usage guidelines, please refer to the project's documentation.
