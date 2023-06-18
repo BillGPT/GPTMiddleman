@@ -16,9 +16,18 @@ In addition to the GPT model interaction, GPTMiddleman also provides a set of ad
 
 - **SQLite Database**: GPTMiddleman uses SQLite for storing user data, providing a lightweight and efficient solution for user management.
 
-## Getting Started
+## Getting Started(Linux)
 
 To get started with GPTMiddleman, you need to have Rust installed on your machine. You can download Rust from the official website.
+
+Install dependencies:
+
+```bash
+sudo apt install rustc
+sudo apt install cargo
+sudo apt install libssl-dev
+sudo apt install libsqlite3-dev
+```
 
 Once you have Rust installed, you can clone the GPTMiddleman repository and build the project using the following commands:
 
