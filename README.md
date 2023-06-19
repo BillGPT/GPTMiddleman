@@ -144,9 +144,9 @@ Replace http://localhost:3000 in the above commands with your actual server addr
 
 ### Configuring the Embeddings Directory
 
-To specify your own directory for embeddings data in the `src/models/storage/memory.rs` file, you need to replace `"wiki_5"` in `load_all_embeddings("wiki_5")` with your desired path.
+To specify your own directory for the embeddings data, you need to modify the `src/models/storage/memory.rs` file. In this file, replace `"wiki_5"` in `load_all_embeddings("wiki_5")` with your desired path.
 
-Each file in your directory should be a JSON file with the following format:
+Each file in your directory should be a JSON file in the following format:
 
 ```json
 {
@@ -162,12 +162,17 @@ Each file in your directory should be a JSON file with the following format:
 }
 ```
 
+### Downloading the Wiki Data
+
+The wiki data used in this project can be downloaded from the following sources:
+
+- Raw wiki data: https://www.kaggle.com/datasets/stephanst/wikipedia-simple-openai-embeddings
+- Processed wiki data with trimmed fields: https://huggingface.co/datasets/BillGPT/OpenAI_embeddings_for_Wikipedia_Simple_English
+
+The raw data also utilizes OPENAI embeddings. However, in the processed dataset, the fields have been trimmed to include only the most useful ones.
+
 ## Contributing
 Contributions to GPTMiddleman are welcome. If you would like to contribute, please fork the repository and submit a pull request.
 
 ## License
 GPTMiddleman is licensed under the MIT License.
-
-## Downloaded Wiki Data
-The wiki data used in this project was downloaded from [https://www.kaggle.com/datasets/stephanst/wikipedia-simple-openai-embeddings](https://www.kaggle.com/datasets/stephanst/wikipedia-simple-openai-embeddings).
-
