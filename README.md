@@ -167,3 +167,7 @@ Contributions to GPTMiddleman are welcome. If you would like to contribute, plea
 
 ## License
 GPTMiddleman is licensed under the MIT License.
+
+## Downloaded Wiki Data
+The wiki data used in this project was downloaded from [https://www.kaggle.com/datasets/stephanst/wikipedia-simple-openai-embeddings](https://www.kaggle.com/datasets/stephanst/wikipedia-simple-openai-embeddings).
+
